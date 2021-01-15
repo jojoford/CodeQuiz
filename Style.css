@@ -1,0 +1,15 @@
+body {
+    font-family: "Josefin Slab", serif;
+  }
+  .wrapper {
+    margin: 100px auto 0 auto;
+    max-width: 600px;
+  }
+  
+  .hide {
+    display: none;
+  }
+  
+  .start {
+    text-align: center;
+  }
