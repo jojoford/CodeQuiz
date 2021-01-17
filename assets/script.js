@@ -1,96 +1,98 @@
 // variables
-
 var questionsEl = document.querySelector("#questions");
 var timerEl = document.querySelector("#time");
 var choicesEl = document.querySelector("#choices");
 var submitBtn = document.querySelector("#submit");
 var startBtn = document.querySelector("#start");
 var initialsEl = document.querySelector("#initials");
-var answercheckEl = document.querySelector("#answercheck");
+var feedbackEl = document.querySelector("#feedback");
 
-// quiz game variables
+// quiz state variables
 var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timerId;
 
 function startQuiz() {
+  // hide start screen
   var startScreenEl = document.getElementById("start-screen");
   startScreenEl.setAttribute("class", "hide");
 
-  // class hide then remove to show questions 
+  // un-hide questions section
   questionsEl.removeAttribute("class");
 
   // start timer
   timerId = setInterval(clockTick, 1000);
+
+  // show starting time
   timerEl.textContent = time;
 
   getQuestion();
 }
 
 function getQuestion() {
-  // will take current question object from array
+  // get current question object from array
   var currentQuestion = questions[currentQuestionIndex];
 
-  // title= current question
+  // update title with current question
   var titleEl = document.getElementById("question-title");
   titleEl.textContent = currentQuestion.title;
 
-  // choices: clear old question choices
+  // clear out any old question choices
   choicesEl.innerHTML = "";
 
-  // loop choices
+  // loop over choices
   currentQuestion.choices.forEach(function(choice, i) {
-    // button for each choice
+    // create new button for each choice
     var choiceNode = document.createElement("button");
     choiceNode.setAttribute("class", "choice");
     choiceNode.setAttribute("value", choice);
 
     choiceNode.textContent = i + 1 + ". " + choice;
 
-    // need click event listener 4 each choice
+    // attach click event listener to each choice
     choiceNode.onclick = questionClick;
 
-    // show choice on page
+    // display on the page
     choicesEl.appendChild(choiceNode);
   });
 }
 
 function questionClick() {
-  // check if user ans wrong
+  // check if user guessed wrong
   if (this.value !== questions[currentQuestionIndex].answer) {
-    // penalize 10
-    time -= 10;
+    // penalize time
+    time -= 15;
 
     if (time < 0) {
       time = 0;
     }
     // display new time on page
     timerEl.textContent = time;
-    answercheckEl.textContent = "Sorry!";
-    anwercheckEl.style.color = "red";
-    answercheckEl.style.fontSize = "400%";
+    feedbackEl.textContent = "Sorry!Try another";
+    feedbackEl.style.color = "blue";
+    feedbackEl.style.fontSize = "200%";
   } else {
-    answercheckEl.textContent = "Yippie!";
-    answercheckEl.style.color = "green";
-    answercheckEl.style.fontSize = "400%";
+    feedbackEl.textContent = "Yippie!";
+    feedbackEl.style.color = "purple";
+    feedbackEl.style.fontSize = "200%";
   }
-answercheckEl.setAttribute("class", "answercheck");
-setTimeout(function() {
-  answercheckEl.setAttribute("class", "answercheck hide");
-}, 1000);
 
-// next question
-currentQuestionIndex++;
+  // flash right/wrong feedback
+  feedbackEl.setAttribute("class", "feedback");
+  setTimeout(function() {
+    feedbackEl.setAttribute("class", "feedback hide");
+  }, 1000);
 
-// time checker
-if (currentQuestionIndex === questions.length) {
-  quizEnd();
-} else {
-  getQuestion();
+  // next question
+  currentQuestionIndex++;
+
+  // time checker
+  if (currentQuestionIndex === questions.length) {
+    quizEnd();
+  } else {
+    getQuestion();
+  }
 }
-}
-
-
 function quizEnd() {
   // stop timer
   clearInterval(timerId);
@@ -162,8 +164,9 @@ var choicesEl = document.querySelector("#choices");
 var submitBtn = document.querySelector("#submit");
 var startBtn = document.querySelector("#start");
 var initialsEl = document.querySelector("#initials");
-var answercheckEl = document.querySelector("#answercheck");
-// quiz variables
+var feedbackEl = document.querySelector("#feedback");
+
+// quiz state variables
 var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timerId;
@@ -173,27 +176,27 @@ function startQuiz() {
   var startScreenEl = document.getElementById("start-screen");
   startScreenEl.setAttribute("class", "hide");
 
-  // remove hide
+  // un-hide questions section
   questionsEl.removeAttribute("class");
 
-  // timer starts
+  // start timer
   timerId = setInterval(clockTick, 1000);
 
-  // display time
+  // show starting time
   timerEl.textContent = time;
 
   getQuestion();
 }
 
 function getQuestion() {
-  // get next question object from array
+  // get current question object from array
   var currentQuestion = questions[currentQuestionIndex];
 
-  // update with current question
+  // update title with current question
   var titleEl = document.getElementById("question-title");
   titleEl.textContent = currentQuestion.title;
 
-  // clear old  choices
+  // clear out any old question choices
   choicesEl.innerHTML = "";
 
   // loop over choices
@@ -217,26 +220,26 @@ function questionClick() {
   // check if user guessed wrong
   if (this.value !== questions[currentQuestionIndex].answer) {
     // penalize time
-    time -= 10;
+    time -= 15;
 
     if (time < 0) {
       time = 0;
     }
     // display new time on page
     timerEl.textContent = time;
-    checkanswerEl.textContent = "Sorry!";
-    checkanswerEl.style.color = "red";
-    checkanswerEl.style.fontSize = "400%";
+    feedbackEl.textContent = "Sorry! Try another";
+    feedbackEl.style.color = "blue";
+    feedbackEl.style.fontSize = "200%";
   } else {
-    checkanswerEl.textContent = "Yippie!";
-    checkanswerEl.style.color = "green";
-    checkanswerEl.style.fontSize = "400%";
+    feedbackEl.textContent = "Yippe!";
+    feedbackEl.style.color = "purple";
+    feedbackEl.style.fontSize = "200%";
   }
 
-  // alert right or wrong 
-  checkanswerEl.setAttribute("class", "checkanswer");
+  // flash right/wrong feedback
+  feedbackEl.setAttribute("class", "feedback");
   setTimeout(function() {
-    checkanswerEl.setAttribute("class", "checkanswer hide");
+    feedbackEl.setAttribute("class", "feedback hide");
   }, 1000);
 
   // next question
@@ -282,7 +285,7 @@ function saveHighscore() {
   var initials = initialsEl.value.trim();
 
   if (initials !== "") {
-    // localstorage or empty array
+    // get saved scores from localstorage, or if not any, set to empty array
     var highscores =
       JSON.parse(window.localStorage.getItem("highscores")) || [];
 
@@ -297,13 +300,13 @@ function saveHighscore() {
     window.localStorage.setItem("highscores", JSON.stringify(highscores));
 
     // redirect to next page
-    window.location.href = "score.html";
+    window.location.href = "scores.html";
   }
 }
 
 function checkForEnter(event) {
-  if (event.key === "Enter") 
-  {
+  // "13" represents the enter key
+  if (event.key === "Enter") {
     saveHighscore();
   }
 }

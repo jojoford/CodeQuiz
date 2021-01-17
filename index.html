@@ -7,18 +7,20 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     
     <link rel="stylesheet" href="assets/Style.css" />
-    <script src="assets/script.js"></script>
-    <script src="assets/questionscript.js"></script>
+    
+    
     </head>
   <body>
-    <div class="scores"><a href="scores.html">View Highscores</a></div>
+    <div class="scores"><a href="scores.html"><button id="view highscores">
+
+    View Highscores</button></a></div>
 
     <div class="timer">Time: <span id="time">0</span></div>
 
     <div class="wrapper">
       <div id="start-screen" class="start">
         <h1>Coding Quiz Challenge</h1>
-        Try to answer the code-related questions within the time limit. Incorrect answers will penalize your score/time.
+        Try to answer the code-related questions within the time limit. Incorrect answers will penalize your score/time
           by 10 seconds
         </p>
         <button id="start">Start Quiz</button>
@@ -37,8 +39,9 @@
           <button id="submit">Submit</button>
         </p>
       </div>
-      <div id="answercheck" class="answercheck hide"></div>
+      <div id="feedback" class="feedback hide"></div>
     </div>
-   
+   <script src="assets/questionscript.js"></script>
+    <script src="assets/script.js"></script>
   </body>
 </html>
