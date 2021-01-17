@@ -13,6 +13,6 @@ HMLT CSS and JAVASCRIPT
 
 Given mock up of project [04-web-apis-homework-demo.gif](https://postimg.cc/DmxC4zgM)
 
-Screen shot of project:[![screenshot-of-Coding-Quiz.png](https://i.postimg.cc/9QN8Wrz4/screenshot-of-Coding-Quiz.png)](https://postimg.cc/VJnBgsq1)
+Screen shot of project:[![screenshot-Code-Quiz.png](https://i.postimg.cc/X71c5tWm/screenshot-Code-Quiz.png)](https://postimg.cc/MvRQ2Pvm)
 
 Link to deployed project: https://jojoford.github.io/CodeQuiz/ 
