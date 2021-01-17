@@ -6,6 +6,7 @@ var choicesEl = document.querySelector("#choices");
 var submitBtn = document.querySelector("#submit");
 var startBtn = document.querySelector("#start");
 var initialsEl = document.querySelector("#initials");
+var answercheckEl = document.querySelector("#answercheck");
 
 // quiz game variables
 var currentQuestionIndex = 0;
@@ -65,12 +66,100 @@ function questionClick() {
     }
     // display new time on page
     timerEl.textContent = time;
-    feedbackEl.textContent = "Sorry!";
-    feedbackEl.style.color = "red";
-    feedbackEl.style.fontSize = "400%";
+    answercheckEl.textContent = "Sorry!";
+    anwercheckEl.style.color = "red";
+    answercheckEl.style.fontSize = "400%";
   } else {
-    feedbackEl.textContent = "Yippie!";
-    feedbackEl.style.color = "green";
-    feedbackEl.style.fontSize = "400%";
+    answercheckEl.textContent = "Yippie!";
+    answercheckEl.style.color = "green";
+    answercheckEl.style.fontSize = "400%";
+  }
+answercheckEl.setAttribute("class", "answercheck");
+setTimeout(function() {
+  answercheckEl.setAttribute("class", "answercheck hide");
+}, 1000);
+
+// next question
+currentQuestionIndex++;
+
+// time checker
+if (currentQuestionIndex === questions.length) {
+  quizEnd();
+} else {
+  getQuestion();
+}
+}
+
+
+function quizEnd() {
+  // stop timer
+  clearInterval(timerId);
+
+  // show end screen
+  var endScreenEl = document.getElementById("end-screen");
+  endScreenEl.removeAttribute("class");
+
+  // show final score
+  var finalScoreEl = document.getElementById("final-score");
+  finalScoreEl.textContent = time;
+
+  // hide questions section
+  questionsEl.setAttribute("class", "hide");
+}
+
+function clockTick() {
+  // update time
+  time--;
+  timerEl.textContent = time;
+
+  // check if user ran out of time
+  if (time <= 0) {
+    quizEnd();
   }
 }
+
+function saveHighscore() {
+  // get value of input box
+  var initials = initialsEl.value.trim();
+
+  if (initials !== "") {
+    // get saved scores from localstorage, or if not any, set to empty array
+    var highscores =
+      JSON.parse(window.localStorage.getItem("highscores")) || [];
+
+    // format new score object for current user
+    var newScore = {
+      score: time,
+      initials: initials
+    };
+
+    // save to localstorage
+    highscores.push(newScore);
+    window.localStorage.setItem("highscores", JSON.stringify(highscores));
+
+    // redirect to next page
+    window.location.href = "score.html";
+  }
+}
+
+function checkForEnter(event) {
+  // "13" represents the enter key
+  if (event.key === "Enter") {
+    saveHighscore();
+  }
+}
+
+// submit initials
+submitBtn.onclick = saveHighscore;
+
+// start quiz
+startBtn.onclick = startQuiz;
+
+initialsEl.onkeyup = checkForEnter;// DOM elements
+var questionsEl = document.querySelector("#questions");
+var timerEl = document.querySelector("#time");
+var choicesEl = document.querySelector("#choices");
+var submitBtn = document.querySelector("#submit");
+var startBtn = document.querySelector("#start");
+var initialsEl = document.querySelector("#initials");
+var answercheckEl = document.querySelector("#answercheck");
