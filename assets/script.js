@@ -233,7 +233,7 @@ function questionClick() {
     checkanswerEl.style.fontSize = "400%";
   }
 
-  // flash right/wrong feedback
+  // alert right or wrong 
   checkanswerEl.setAttribute("class", "checkanswer");
   setTimeout(function() {
     checkanswerEl.setAttribute("class", "checkanswer hide");
@@ -282,7 +282,7 @@ function saveHighscore() {
   var initials = initialsEl.value.trim();
 
   if (initials !== "") {
-    // get saved scores from localstorage, or if not any, set to empty array
+    // localstorage or empty array
     var highscores =
       JSON.parse(window.localStorage.getItem("highscores")) || [];
 
@@ -302,8 +302,8 @@ function saveHighscore() {
 }
 
 function checkForEnter(event) {
-  // "13" represents the enter key
-  if (event.key === "Enter") {
+  if (event.key === "Enter") 
+  {
     saveHighscore();
   }
 }
